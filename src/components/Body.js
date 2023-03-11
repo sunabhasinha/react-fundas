@@ -2,6 +2,7 @@ import { restaurantList } from '../contants';
 import RestaurantCard from './RestaurantCard';
 import { useEffect, useState } from 'react';
 import Shimmer from './Shimmer';
+import { Link } from 'react-router-dom';
 
 function filterData(searchText, restaurants) {
 	const filterData = restaurants.filter((restaurant) =>
@@ -12,7 +13,7 @@ function filterData(searchText, restaurants) {
 }
 
 const Body = () => {
-	const [filteredREstaurants, setFilteredRestaurants] = useState([]);
+	const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 	const [allRestaurants, setAllRestaurants] = useState([]);
 	const [searchText, setSearchText] = useState('');
 
@@ -20,6 +21,8 @@ const Body = () => {
 	 * first component renders then useEffect is called.
 	 * empty dependency array => once after initial render
 	 * dep array [searchText] => once after initial render + everytime after render (searchText changes)
+	 * Called after the component is rendered
+	 * if there is no dependency array, then useEffect is called after each render
 	 */
 	useEffect(() => {
 		getRestaurantList();
@@ -34,7 +37,7 @@ const Body = () => {
 		setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
 	}
 
-	return allRestaurants.length === 0 ? (
+	return allRestaurants?.length === 0 ? (
 		<Shimmer />
 	) : (
 		<>
@@ -61,10 +64,15 @@ const Body = () => {
 				</button>
 			</div>
 			<div className="restaurant-list">
-				{filteredREstaurants.length ? (
-					filteredREstaurants.map((restaurant) => {
+				{filteredRestaurants?.length ? (
+					filteredRestaurants.map((restaurant) => {
 						return (
-							<RestaurantCard {...restaurant.data} key={restaurant.data.id} />
+							<Link
+								key={restaurant.data.id}
+								to={`/restaurant/${restaurant.data.id}`}
+							>
+								<RestaurantCard {...restaurant.data} />
+							</Link>
 						);
 					})
 				) : (
