@@ -11,12 +11,7 @@ const Title = () => (
 	</a>
 );
 
-console.log('render');
-
 const Header = () => {
-	useEffect(() => {
-		console.log('useEff');
-	});
 	return (
 		<div className="header">
 			<Title />
@@ -33,6 +28,9 @@ const Header = () => {
 						<Link to="/contact">Contact</Link>
 					</li>
 					<li>Cart</li>
+					<li>
+						<Link to="/instamart">Instamrt</Link>
+					</li>
 				</ul>
 			</div>
 		</div>
