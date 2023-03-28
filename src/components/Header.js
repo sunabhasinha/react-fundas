@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from '../utils/UserContext';
 
 const Title = () => (
 	<a href="/">
@@ -12,6 +13,8 @@ const Title = () => (
 );
 
 const Header = () => {
+	const { user } = useContext(UserContext);
+
 	return (
 		<div className="header">
 			<Title />
@@ -33,6 +36,8 @@ const Header = () => {
 					</li>
 				</ul>
 			</div>
+
+			<span>{user.name}</span>
 		</div>
 	);
 };
